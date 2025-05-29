@@ -46,10 +46,8 @@ app.get('/search', async (req, res) => {
   }
 });
 
-app.use((req, res) => {
-  res.status(404).send('Not Found');
-});
-
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+if (require.main === module) {
+  server.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
+}
