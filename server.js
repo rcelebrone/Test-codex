@@ -1,6 +1,5 @@
-const http = require('http');
+const express = require('express');
 const https = require('https');
-const { URL } = require('url');
 
 function fetchGoogle(query) {
   return new Promise((resolve, reject) => {
@@ -29,31 +28,28 @@ function extractFirstTitle(html) {
 
 const port = process.env.PORT || 3000;
 
-const server = http.createServer(async (req, res) => {
-  const url = new URL(req.url, `http://${req.headers.host}`);
-  if (url.pathname === '/search') {
-    const q = url.searchParams.get('q');
-    if (!q) {
-      res.writeHead(400, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'Missing q parameter' }));
-      return;
-    }
-    try {
-      const html = await fetchGoogle(q);
-      const title = extractFirstTitle(html);
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ title }));
-    } catch (err) {
-      console.error(err);
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'Failed to fetch results' }));
-    }
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('Not Found');
+const app = express();
+
+app.get('/search', async (req, res) => {
+  const q = req.query.q;
+  if (!q) {
+    res.status(400).json({ error: 'Missing q parameter' });
+    return;
+  }
+  try {
+    const html = await fetchGoogle(q);
+    const title = extractFirstTitle(html);
+    res.json({ title });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch results' });
   }
 });
 
-server.listen(port, () => {
+app.use((req, res) => {
+  res.status(404).send('Not Found');
+});
+
+app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
