@@ -1,6 +1,5 @@
 const assert = require('assert');
-const { add } = require('../index');
-const { extractFirstTitle } = require('../server');
+const { add, extractFirstTitle } = require('../index');
 
 assert.strictEqual(add(2, 3), 5);
 
