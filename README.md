@@ -22,6 +22,21 @@ npm run build
 npm test
 ```
 
+## API Server
+
+An example HTTP API is provided in `server.js`. Start it with:
+
+```sh
+npm start
+```
+
+Query the `/search` endpoint with a `q` parameter to fetch the title of the first
+Google search result. For example:
+
+```
+curl "http://localhost:3000/search?q=nodejs"
+```
+
 ## Continuous Integration
 
 A GitHub Actions workflow is provided in `.github/workflows/nodejs.yml` which runs the build and tests on Node.js 18.x and 20.x whenever changes are pushed or a pull request is opened.
