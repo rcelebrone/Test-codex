@@ -24,7 +24,7 @@ npm test
 
 ## API Server
 
-An example HTTP API is provided in `server.js`. Start it with:
+An example HTTP API is provided in `index.js`. Start it with:
 
 ```sh
 npm start
