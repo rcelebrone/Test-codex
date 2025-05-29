@@ -37,6 +37,13 @@ Google search result. For example:
 curl "http://localhost:3000/search?q=nodejs"
 ```
 
+You can also fetch all blog post titles from [rcelebrone.com](https://www.rcelebrone.com)
+by querying the `/search-rcelebrone` endpoint:
+
+```
+curl "http://localhost:3000/search-rcelebrone?q=Arquitetura"
+```
+
 ## Continuous Integration
 
 A GitHub Actions workflow is provided in `.github/workflows/nodejs.yml` which runs the build and tests on Node.js 18.x and 20.x whenever changes are pushed or a pull request is opened.
